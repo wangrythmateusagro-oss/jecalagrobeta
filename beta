@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Produtos Jecal Agro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Cores da marca Jecal Agro */
+        :root {
+            --primary-blue: #00529B; /* Azul principal */
+            --secondary-red: #D42128;  /* Vermelho para destaque */
+            --jecal-dark-gray: #3c3c3b; /* Cinza escuro para texto */
+        }
+
+        /* Estilos personalizados */
+        html {
+            scroll-behavior: smooth;
+        }
+        .bg-primary-blue { background-color: var(--primary-blue); }
+        .text-primary-blue { color: var(--primary-blue); }
+        .bg-secondary-red { background-color: var(--secondary-red); }
+        .text-secondary-red { color: var(--secondary-red); }
+        .border-primary-blue { border-color: var(--primary-blue); }
+        .ring-primary-blue:focus {
+            --tw-ring-color: var(--primary-blue);
+        }
+
+        /* Efeito de hover nos botões */
+        .btn-red {
+            background-color: var(--secondary-red);
+            transition: background-color 0.3s ease;
+        }
+        .btn-red:hover {
+            background-color: #b81b21; /* Tom mais escuro do vermelho */
+        }
+
+        /* Correção para o cabeçalho fixo não sobrepor o conteúdo */
+        body {
+            padding-top: 68px; /* Altura aproximada do header */
+        }
+        header {
+            width: 100%;
+        }
+
+        /* Transições suaves */
+        .modal { transition: opacity 0.3s ease; }
+        .card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+    <!-- Cabeçalho -->
+    <header class="bg-white shadow-md fixed top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-primary-blue">
+                <i class="fas fa-leaf mr-2"></i>Jecal Agro
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#" id="nav-home" class="text-gray-600 hover:text-primary-blue font-medium">Início</a>
+                <a href="#produtos" id="nav-produtos" class="text-gray-600 hover:text-primary-blue font-medium">Portfólio</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-primary-blue focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <a href="#" id="mobile-nav-home" class="block py-2 px-4 text-sm text-gray-600 hover:bg-blue-50">Início</a>
+            <a href="#produtos" id="mobile-nav-produtos" class="block py-2 px-4 text-sm text-gray-600 hover:bg-blue-50">Portfólio</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        
+        <div id="home-view">
+            <section class="bg-primary-blue rounded-lg text-white p-8 md:p-12 text-center shadow-lg mb-12">
+                <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Guia de Produtos Corporativo</h1>
+                <p class="text-lg md:text-xl mb-6">Explore o nosso portfólio completo de soluções para o campo.</p>
+                <a href="#produtos" id="explore-btn" class="btn-red text-white font-bold py-3 px-8 rounded-full inline-block">Explore Nossas Soluções</a>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-center mb-8" style="color: var(--jecal-dark-gray);">Navegue por Categoria</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <!-- Cards de Categoria serão inseridos aqui pelo JS -->
+                </div>
+            </section>
+        </div>
+
+        <div id="actives-view" class="hidden">
+            <h2 id="actives-title" class="text-3xl font-bold mb-8 text-center" style="color: var(--jecal-dark-gray);">Princípios Ativos</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <aside class="w-full md:w-1/4 lg:w-1/5">
+                    <div class="bg-white p-6 rounded-lg shadow-md sticky top-24">
+                        <h3 class="text-xl font-bold mb-4 border-b pb-2">Filtros</h3>
+                        
+                        <div class="mb-4">
+                            <label for="search-input" class="font-semibold block mb-2">Busca Rápida</label>
+                            <input type="text" id="search-input" placeholder="Produto ou princípio ativo..." class="w-full border-gray-300 rounded-md shadow-sm focus:border-primary-blue ring-primary-blue">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="category-filter" class="font-semibold block mb-2">Categoria</label>
+                            <select id="category-filter" class="w-full border-gray-300 rounded-md shadow-sm focus:border-primary-blue ring-primary-blue"></select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="manufacturer-filter" class="font-semibold block mb-2">Fabricante</label>
+                            <select id="manufacturer-filter" class="w-full border-gray-300 rounded-md shadow-sm focus:border-primary-blue ring-primary-blue"></select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="active-ingredient-filter" class="font-semibold block mb-2">Princípio Ativo</label>
+                            <select id="active-ingredient-filter" class="w-full border-gray-300 rounded-md shadow-sm focus:border-primary-blue ring-primary-blue"></select>
+                        </div>
+                        
+                        <button id="reset-filters-btn" class="w-full bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Limpar Filtros</button>
+                    </div>
+                </aside>
+                
+                <div id="actives-grid" class="w-full md:w-3/4 lg:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <div id="no-results" class="w-full md:w-3/4 lg:w-4/5 text-center py-12 hidden">
+                    <p class="text-xl text-gray-500">Nenhum princípio ativo encontrado.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="product-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4" onclick="closeModal(event)">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <div class="p-6 relative">
+                <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl" onclick="closeModal(event)">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div id="modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- BANCO DE DADOS DE PRODUTOS ---
+        const products = [
+          // Herbicidas
+          { "id": 1, "fabricante": "Tide", "classe": "Herbicida", "produto": "CAMP-D", "principio_ativo": "2,4 D + Picloram" },
+          { "id": 2, "fabricante": "Tide", "classe": "Herbicida", "produto": "MATTOR", "principio_ativo": "Fluroxipir + Picloram" },
+          { "id": 3, "fabricante": "Tide", "classe": "Herbicida", "produto": "STATION", "principio_ativo": "Picloram" },
+          { "id": 4, "fabricante": "Tide", "classe": "Herbicida", "produto": "TRICLOPIR TIDE", "principio_ativo": "Triclopir" },
+          { "id": 5, "fabricante": "Tide", "classe": "Herbicida", "produto": "PREN-D 806", "principio_ativo": "2,4 D" },
+          { "id": 6, "fabricante": "Tide", "classe": "Herbicida", "produto": "POCCO 480 SL", "principio_ativo": "Glifosato" },
+          { "id": 7, "fabricante": "Tide", "classe": "Herbicida", "produto": "GRIFO", "principio_ativo": "Nicosulfurom" },
+          { "id": 8, "fabricante": "Ihara", "classe": "Herbicida", "produto": "MIRANT", "principio_ativo": "2,4 D" },
+          { "id": 9, "fabricante": "Syngenta", "classe": "Herbicida", "produto": "PRIMOLEO", "principio_ativo": "Atrazina" },
+          { "id": 10, "fabricante": "Albaugh", "classe": "Herbicida", "produto": "ULTIMATO", "principio_ativo": "Atrazina" },
+          { "id": 11, "fabricante": "Nortox", "classe": "Herbicida", "produto": "FLUROXIPIR P", "principio_ativo": "Fluroxipir + Picloram" },
+          { "id": 12, "fabricante": "BRA", "classe": "Herbicida", "produto": "XENON", "principio_ativo": "Fluroxipir + Picloram" },
+          { "id": 13, "fabricante": "Proventis", "classe": "Herbicida", "produto": "MESOTRIONE 480 SC PROVENTIS", "principio_ativo": "Mesotrione" },
+          { "id": 14, "fabricante": "BRA", "classe": "Herbicida", "produto": "DERRETE", "principio_ativo": "Metsulfurom" },
+          { "id": 15, "fabricante": "Loveland", "classe": "Herbicida", "produto": "DERRETE 600WG", "principio_ativo": "Metsulfurom" },
+          { "id": 16, "fabricante": "Nortox", "classe": "Herbicida", "produto": "METSULFURON NORTOX", "principio_ativo": "Metusulfurom" },
+          { "id": 17, "fabricante": "Nortox", "classe": "Herbicida", "produto": "TRICLOPIR NORTOX", "principio_ativo": "Triclopir" },
+          { "id": 18, "fabricante": "Albaugh", "classe": "Herbicida", "produto": "FRENO 240 EC", "principio_ativo": "Cletodim" },
+          { "id": 19, "fabricante": "Ourofino", "classe": "Herbicida", "produto": "DEMOLIDORBR", "principio_ativo": "Demolidor" },
+          { "id": 20, "fabricante": "Allier", "classe": "Herbicida", "produto": "OLASOJA 500", "principio_ativo": "Flumioxazina" },
+          { "id": 21, "fabricante": "Alta", "classe": "Herbicida", "produto": "ZAFERA 720WG", "principio_ativo": "Glifosato" },
+          { "id": 22, "fabricante": "Syngenta", "classe": "Herbicida", "produto": "ZAPP QI 620SL", "principio_ativo": "Glifosato" },
+          { "id": 23, "fabricante": "Syngenta", "classe": "Herbicida", "produto": "ZAPP WG 720", "principio_ativo": "Glifosato" },
+          { "id": 24, "fabricante": "Alta", "classe": "Herbicida", "produto": "AUDACE", "principio_ativo": "Glufosinato" },
+          { "id": 25, "fabricante": "AGCN", "classe": "Herbicida", "produto": "GLUFOSINATO 850WG", "principio_ativo": "Glufosinato" },
+          { "id": 26, "fabricante": "CCAB", "classe": "Herbicida", "produto": "IMAZETAPIR CCAB 106 SL", "principio_ativo": "Imazetapir" },
+          { "id": 27, "fabricante": "Alta", "classe": "Herbicida", "produto": "ANCOSAR 720", "principio_ativo": "MSMA" },
+          { "id": 28, "fabricante": "Luxembourg", "classe": "Herbicida", "produto": "VOLCANE SL 790", "principio_ativo": "MSMA" },
+          { "id": 29, "fabricante": "Nortox", "classe": "Herbicida", "produto": "SEMPRA 750WG - 200GR", "principio_ativo": "Sempra" },
+          { "id": 30, "fabricante": "Rainbow", "classe": "Herbicida", "produto": "DURAX", "principio_ativo": "S-metolachlor" },
+          { "id": 31, "fabricante": "FMC", "classe": "Herbicida", "produto": "STONE", "principio_ativo": "Stone" },
+          { "id": 32, "fabricante": "Sipcam", "classe": "Herbicida", "produto": "CLICK", "principio_ativo": "Teburtilazina" },
+          { "id": 33, "fabricante": "Globalchem", "classe": "Herbicida", "produto": "CRUZARO 480 EC", "principio_ativo": "Triclopir" },
+          { "id": 34, "fabricante": "Rainbow", "classe": "Herbicida", "produto": "TRICLOMAX", "principio_ativo": "Triclopir" },
+          { "id": 35, "fabricante": "Corteva", "classe": "Herbicida", "produto": "Paxeo", "principio_ativo": "Halauxyfen-metil + Diclosulam" },
+          { "id": 36, "fabricante": "Corteva", "classe": "Herbicida", "produto": "Spider", "principio_ativo": "Diclosulam" },
+          { "id": 37, "fabricante": "Corteva", "classe": "Herbicida", "produto": "Elevore", "principio_ativo": "Halauxyfen-metil" },
+          { "id": 38, "fabricante": "Corteva", "classe": "Herbicida", "produto": "Enlist Colex D", "principio_ativo": "2,4 D Sal Colina" },
+          { "id": 39, "fabricante": "Corteva", "classe": "Herbicida", "produto": "Pacto", "principio_ativo": "Cloransulam" },
+          { "id": 40, "fabricante": "Corteva", "classe": "Herbicida", "produto": "Verdict Max", "principio_ativo": "Haloxifope" },
+          { "id": 41, "fabricante": "Corteva", "classe": "Herbicida", "produto": "Gapper", "principio_ativo": "Florpirauxifen" },
+          { "id": 42, "fabricante": "Corteva", "classe": "Herbicida", "produto": "Accent", "principio_ativo": "Nicossulfuron" },
+          { "id": 43, "fabricante": "Tide", "classe": "Inseticida", "produto": "CIPERMETRINA PRENTISS GALGOTRI", "principio_ativo": "Cipermetrina" },
+          { "id": 44, "fabricante": "Corteva", "classe": "Inseticida", "produto": "EXALT", "principio_ativo": "Espinetoram (120 g/L)" },
+          { "id": 45, "fabricante": "Corteva", "classe": "Inseticida", "produto": "INTREPID EDGE", "principio_ativo": "Metoxifenozida (300 g/L) + Espinetoram (60 g/L)" },
+          { "id": 46, "fabricante": "Tide", "classe": "Inseticida", "produto": "ABAMECTIN PRENTISS", "principio_ativo": "Abamectina" },
+          { "id": 47, "fabricante": "Baic", "classe": "Inseticida", "produto": "KILLIN", "principio_ativo": "-" },
+          { "id": 48, "fabricante": "Solus", "classe": "Inseticida", "produto": "TALLADEGA", "principio_ativo": "Acetamipride" },
+          { "id": 49, "fabricante": "Rainbow", "classe": "Inseticida", "produto": "ACEWAY WG", "principio_ativo": "Acetamipride + Bifentrina" },
+          { "id": 50, "fabricante": "Rainbow", "classe": "Inseticida", "produto": "FLAME WG", "principio_ativo": "Acetamipride + Bifentrina" },
+          { "id": 51, "fabricante": "CHDs", "classe": "Inseticida", "produto": "ALVOFIX", "principio_ativo": "Bifentrina" },
+          { "id": 52, "fabricante": "Ourofino", "classe": "Inseticida", "produto": "BRIT", "principio_ativo": "Cipermetrina" },
+          { "id": 53, "fabricante": "Gharda", "classe": "Inseticida", "produto": "CLORPIRIFOS 48 EC GHARDA", "principio_ativo": "Clorpirifos" },
+          { "id": 54, "fabricante": "Alta", "classe": "Inseticida", "produto": "EVENTRA 800WG", "principio_ativo": "Fipronil" },
+          { "id": 55, "fabricante": "Alta", "classe": "Inseticida", "produto": "FIPRONIL 250FS", "principio_ativo": "Fipronil" },
+          { "id": 56, "fabricante": "Anasac", "classe": "Inseticida", "produto": "CIGARAL", "principio_ativo": "Imidaclopride" },
+          { "id": 57, "fabricante": "Ourofino", "classe": "Inseticida", "produto": "BRILHANTE BR", "principio_ativo": "Metomil" },
+          { "id": 58, "fabricante": "Alta", "classe": "Inseticida", "produto": "ALLORA", "principio_ativo": "Acefato" },
+          { "id": 59, "fabricante": "Tecnomyl", "classe": "Inseticida", "produto": "ADVER 240 SC", "principio_ativo": "Clorfenapir" },
+          { "id": 60, "fabricante": "Tecnomyl", "classe": "Inseticida", "produto": "FECYDE", "principio_ativo": "Diflubenzurom" },
+          { "id": 61, "fabricante": "Syngenta", "classe": "Inseticida", "produto": "ENGEO PLENO S", "principio_ativo": "Engeo Pleno" },
+          { "id": 62, "fabricante": "Tecnomyl", "classe": "Inseticida", "produto": "SUMMIT 250FS", "principio_ativo": "Fipronil" },
+          { "id": 63, "fabricante": "Syngenta", "classe": "Inseticida", "produto": "INFLUX", "principio_ativo": "Influx" },
+          { "id": 64, "fabricante": "Alta", "classe": "Inseticida", "produto": "TAGGER", "principio_ativo": "Lufenurom" },
+          { "id": 65, "fabricante": "Nortox", "classe": "Inseticida", "produto": "PIRIPROXIFEN NORTOX", "principio_ativo": "Piriproxifen" },
+          { "id": 66, "fabricante": "Syngenta", "classe": "Inseticida", "produto": "ACTARA 250WG", "principio_ativo": "Tiametoxam" },
+          { "id": 67, "fabricante": "Corteva", "classe": "Inseticida", "produto": "Intrepid 240", "principio_ativo": "Metoxifenozida (240 g/L)" },
+          { "id": 68, "fabricante": "Corteva", "classe": "Inseticida", "produto": "Expedition", "principio_ativo": "Sulfoxafior (100 g/L) + Lambda Cialotrina (150 g/L)" },
+          { "id": 69, "fabricante": "Corteva", "classe": "Inseticida", "produto": "Lannate", "principio_ativo": "Metomil (215 g/L)" },
+          { "id": 70, "fabricante": "Corteva", "classe": "Fungicida", "produto": "Oranis", "principio_ativo": "Picoxistrobina (250 g/L)" },
+          { "id": 71, "fabricante": "Corteva", "classe": "Fungicida", "produto": "Viovan", "principio_ativo": "Proticonazol (116,7 g/L) + Picoxistrobina (100 g/L)" },
+          { "id": 72, "fabricante": "Corteva", "classe": "Fungicida", "produto": "Oranis + Viovan", "principio_ativo": "Protioconazol (116,7 g/L) + Picoxistrobina (250g/L)" },
+          { "id": 73, "fabricante": "Corteva", "classe": "Fungicida", "produto": "VESSARYA", "principio_ativo": "Benzovindiflupir (50 g/L) + Picoxistrobina (100 g/L)" },
+          { "id": 74, "fabricante": "Corteva", "classe": "Fungicida", "produto": "Aproach Power", "principio_ativo": "Ciproconazol (40 g/L) + Picoxistrobina (90 g/L)" },
+          { "id": 75, "fabricante": "Corteva", "classe": "Fungicida", "produto": "Aproach Premium", "principio_ativo": "Ciproconazol (40 g/L) + Picoxistrobina (60 g/L) + Oxicloreto de Cobre (420 g/L)" },
+          { "id": 76, "fabricante": "Baic", "classe": "Fungicida", "produto": "PHYTOTRAT PREMIUM", "principio_ativo": "-" },
+          { "id": 77, "fabricante": "Baic", "classe": "Fungicida", "produto": "PHYTOTRAT", "principio_ativo": "Cobre + ind resistencia" },
+          { "id": 78, "fabricante": "Sipcam", "classe": "Fungicida", "produto": "METILTIOFAN", "principio_ativo": "Tiofanato Metilico" },
+          { "id": 79, "fabricante": "Sipcam", "classe": "Fungicida", "produto": "SUPPORT", "principio_ativo": "Tiofanato Metilico" },
+          { "id": 80, "fabricante": "Sipcam", "classe": "Fungicida", "produto": "VITENE", "principio_ativo": "Vitene" },
+          { "id": 81, "fabricante": "Lallemand", "classe": "Biológico", "produto": "LALGUARD C99", "principio_ativo": "Cordyceps" },
+          { "id": 82, "fabricante": "Bioma", "classe": "Biológico", "produto": "BIOMA MAIS", "principio_ativo": "Azospirrillum" },
+          { "id": 83, "fabricante": "Lallemand", "classe": "Biológico", "produto": "CRYSTAL", "principio_ativo": "Bacillus Thurigiensis" },
+          { "id": 84, "fabricante": "Bioma", "classe": "Biológico", "produto": "BIOMA BRADY SOJA LIQ 200DS", "principio_ativo": "Brady" },
+          { "id": 85, "fabricante": "Lallemand", "classe": "Biológico", "produto": "LALFIX NITRO", "principio_ativo": "Inoculante soja" },
+          { "id": 86, "fabricante": "Lallemand", "classe": "Biológico", "produto": "STARFIX SOJA", "principio_ativo": "Inoculante soja" },
+          { "id": 87, "fabricante": "Lallemand", "classe": "Biológico", "produto": "LALRISE AZOS", "principio_ativo": "Inoculante soja e milho" },
+          { "id": 88, "fabricante": "Bioma", "classe": "Biológico", "produto": "NEMA PROTECTION 12L (6X2)", "principio_ativo": "Nematicida" },
+          { "id": 89, "fabricante": "Lallemand", "classe": "Biológico", "produto": "ONIX", "principio_ativo": "Nematicida" },
+          { "id": 90, "fabricante": "Lallemand", "classe": "Biológico", "produto": "RIZOS", "principio_ativo": "Nematicida" },
+          { "id": 91, "fabricante": "Bioma", "classe": "Biológico", "produto": "BIOMA FIX", "principio_ativo": "Protetor de inoc" },
+          { "id": 92, "fabricante": "Bioma", "classe": "Biológico", "produto": "BIOMA PHOS 10L (2X5)", "principio_ativo": "Solubilizador de P" },
+          { "id": 93, "fabricante": "Lallemand", "classe": "Biológico", "produto": "QUALITY", "principio_ativo": "Trichoderma" },
+          { "id": 94, "fabricante": "Bioma", "classe": "Biológico", "produto": "TRICH PROTECTION 10L (2X5)", "principio_ativo": "Trichoderma" },
+          { "id": 95, "fabricante": "Lallemand", "classe": "Biológico", "produto": "ORGANIC", "principio_ativo": "Trichoderma + grafite" },
+          { "id": 96, "fabricante": "Corteva", "classe": "Biológico", "produto": "Utrisha N", "principio_ativo": "Methylobacterium Symbioticum" },
+          { "id": 97, "fabricante": "Corteva", "classe": "Biológico", "produto": "Omsugo P", "principio_ativo": "Bacillus Subtilis + Bacillus Megaterium" },
+          { "id": 98, "fabricante": "Corteva", "classe": "Biológico", "produto": "TezPetix Beuve", "principio_ativo": "Beauveria bassiana simbi BB15" },
+          { "id": 99, "fabricante": "Corteva", "classe": "TS", "produto": "Dermacor", "principio_ativo": "Clorantraniliprole (625 g/L)" },
+          { "id": 100, "fabricante": "Corteva", "classe": "TS", "produto": "Rancona T", "principio_ativo": "Ipoconazol (10 g/L) + Tiram (350 g/L)" },
+          { "id": 101, "fabricante": "Baic", "classe": "Adjuvante", "produto": "ROXXO MAX", "principio_ativo": "Adjuvante + red pH" },
+          { "id": 102, "fabricante": "Top Ultra", "classe": "Adjuvante", "produto": "TOP FIX ULTRA", "principio_ativo": "Adjuvante Capim PT" },
+          { "id": 103, "fabricante": "Tide", "classe": "Adjuvante", "produto": "CAMP MAX", "principio_ativo": "Oleo de Laranja" },
+          { "id": 104, "fabricante": "FisioAgro", "classe": "Adjuvante", "produto": "FISIO OIL CDD", "principio_ativo": "Oleo mineral" },
+          { "id": 105, "fabricante": "Top Ultra", "classe": "Adjuvante", "produto": "TOP FIX", "principio_ativo": "Oleo mineral" },
+          { "id": 106, "fabricante": "Quimifol", "classe": "Adjuvante", "produto": "QUIMIFOL PHFOS", "principio_ativo": "Redutor de pH" },
+          { "id": 107, "fabricante": "Baic", "classe": "Adjuvante", "produto": "FIXATIVO", "principio_ativo": "Adjuvante neutro" },
+          { "id": 108, "fabricante": "Tide", "classe": "Adjuvante", "produto": "NEXO", "principio_ativo": "Oleo de Laranja" },
+          { "id": 109, "fabricante": "Sipcam", "classe": "Foliar", "produto": "STILO VERDE", "principio_ativo": "Aminoacido" },
+          { "id": 110, "fabricante": "Sipcam", "classe": "Foliar", "produto": "ABYSS", "principio_ativo": "E.algas A.Nodosum" },
+          { "id": 111, "fabricante": "Baic", "classe": "Foliar", "produto": "NUTRAN", "principio_ativo": "Macro e micro + aminoacidos" },
+          { "id": 112, "fabricante": "Tide", "classe": "Foliar", "produto": "NUTRI POWER N", "principio_ativo": "Nitrogenio" },
+          { "id": 113, "fabricante": "Baic", "classe": "Nematicida", "produto": "TOID", "principio_ativo": "Nematicida" },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const activesGrid = document.getElementById('actives-grid');
+            const categoryFilter = document.getElementById('category-filter');
+            const manufacturerFilter = document.getElementById('manufacturer-filter');
+            const activeIngredientFilter = document.getElementById('active-ingredient-filter');
+            const searchInput = document.getElementById('search-input');
+            const resetFiltersBtn = document.getElementById('reset-filters-btn');
+            const noResultsDiv = document.getElementById('no-results');
+            const homeView = document.getElementById('home-view');
+            const activesView = document.getElementById('actives-view');
+            
+            const categories = [...new Set(products.map(p => p.classe))].sort();
+            const manufacturers = [...new Set(products.map(p => p.fabricante))].sort();
+            const activeIngredients = [...new Set(products.map(p => p.principio_ativo))].sort();
+
+            const categoryIcons = {
+                'Herbicida': 'fa-plant-wilt', 'Inseticida': 'fa-bug', 'Fungicida': 'fa-bacteria',
+                'Biológico': 'fa-dna', 'TS': 'fa-seedling', 'Adjuvante': 'fa-flask-vial',
+                'Foliar': 'fa-leaf', 'Nematicida': 'fa-worm'
+            };
+
+            function populateFilters() {
+                const populateSelect = (selectEl, options, defaultLabel) => {
+                    selectEl.innerHTML = `<option value="">${defaultLabel}</option>`;
+                    options.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt;
+                        option.textContent = opt;
+                        selectEl.appendChild(option);
+                    });
+                };
+                populateSelect(categoryFilter, categories, "Todas as Categorias");
+                populateSelect(manufacturerFilter, manufacturers, "Todos os Fabricantes");
+                populateSelect(activeIngredientFilter, activeIngredients, "Todos os Ativos");
+            }
+
+            function renderActives(activesToRender) {
+                activesGrid.innerHTML = '';
+                noResultsDiv.classList.toggle('hidden', activesToRender.length > 0);
+                activesGrid.classList.toggle('hidden', activesToRender.length === 0);
+                
+                activesToRender.forEach(active => {
+                    const card = document.createElement('div');
+                    card.className = 'card bg-white rounded-lg shadow-md p-4 flex flex-col h-full justify-center items-center text-center cursor-pointer';
+                    card.innerHTML = `<h3 class="text-md font-bold text-primary-blue">${active}</h3>`;
+                    card.onclick = () => openModalForActive(active);
+                    activesGrid.appendChild(card);
+                });
+            }
+
+            function applyFilters() {
+                const category = categoryFilter.value;
+                const manufacturer = manufacturerFilter.value;
+                const activeIngredient = activeIngredientFilter.value;
+                const searchTerm = searchInput.value.toLowerCase();
+
+                let filteredProducts = products.filter(p => 
+                    (!category || p.classe === category) &&
+                    (!manufacturer || p.fabricante === manufacturer) &&
+                    (!activeIngredient || p.principio_ativo === activeIngredient) &&
+                    (!searchTerm || p.produto.toLowerCase().includes(searchTerm) || p.principio_ativo.toLowerCase().includes(searchTerm))
+                );
+                
+                const uniqueActives = [...new Set(filteredProducts.map(p => p.principio_ativo))].sort();
+                
+                renderActives(uniqueActives);
+                document.getElementById('actives-title').textContent = category ? `Princípios Ativos: ${category}` : 'Todos os Princípios Ativos';
+            }
+
+            function showView(viewId) {
+                homeView.classList.add('hidden');
+                activesView.classList.add('hidden');
+                document.getElementById(viewId).classList.remove('hidden');
+            }
+            
+            function renderCategoryCards() {
+                const container = document.querySelector('#home-view .grid');
+                container.innerHTML = '';
+                categories.forEach(cat => {
+                    const card = document.createElement('div');
+                    card.className = 'category-card bg-white p-6 rounded-lg shadow-md text-center cursor-pointer transition-transform transform hover:scale-105';
+                    card.dataset.category = cat;
+                    card.innerHTML = `
+                        <i class="fas ${categoryIcons[cat] || 'fa-tag'} text-4xl text-primary-blue mb-4"></i>
+                        <h3 class="text-xl font-bold" style="color: var(--jecal-dark-gray);">${cat}</h3>
+                    `;
+                    card.addEventListener('click', () => {
+                        showView('actives-view');
+                        categoryFilter.value = cat;
+                        applyFilters();
+                        window.scrollTo(0, 0);
+                    });
+                    container.appendChild(card);
+                });
+            }
+
+            [categoryFilter, manufacturerFilter, activeIngredientFilter].forEach(el => el.addEventListener('change', applyFilters));
+            searchInput.addEventListener('input', applyFilters);
+            
+            resetFiltersBtn.addEventListener('click', () => {
+                categoryFilter.value = '';
+                manufacturerFilter.value = '';
+                activeIngredientFilter.value = '';
+                searchInput.value = '';
+                applyFilters();
+            });
+            
+            document.querySelectorAll('#nav-home, #mobile-nav-home').forEach(el => el.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('home-view');
+                if (!document.getElementById('mobile-menu').classList.contains('hidden')) {
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            }));
+
+            document.querySelectorAll('#nav-produtos, #mobile-nav-produtos, #explore-btn').forEach(el => el.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('actives-view');
+                resetFiltersBtn.click();
+                window.scrollTo(0, 0);
+                if (!document.getElementById('mobile-menu').classList.contains('hidden')) {
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            }));
+
+            document.getElementById('mobile-menu-button').addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+
+            populateFilters();
+            applyFilters();
+            renderCategoryCards();
+        });
+
+        function openModalForActive(activeIngredient) {
+            const category = document.getElementById('category-filter').value;
+            const manufacturer = document.getElementById('manufacturer-filter').value;
+
+            const matchingProducts = products.filter(p =>
+                p.principio_ativo === activeIngredient &&
+                (!category || p.classe === category) &&
+                (!manufacturer || p.fabricante === manufacturer)
+            ).sort((a,b) => a.produto.localeCompare(b.produto));
+
+            if (matchingProducts.length === 0) return;
+
+            const modal = document.getElementById('product-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            let productsHtml = matchingProducts.map(product => `
+                <div class="border-b last:border-b-0 py-3 flex justify-between items-center">
+                    <div>
+                        <p class="font-bold text-gray-800">${product.produto}</p>
+                        <p class="text-sm text-gray-500">${product.fabricante}</p>
+                    </div>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">${product.classe}</span>
+                </div>
+            `).join('');
+
+            modalContent.innerHTML = `
+                <h2 class="text-xl font-bold text-primary-blue mb-2">Princípio Ativo</h2>
+                <p class="text-2xl font-semibold text-gray-800 mb-6">${activeIngredient}</p>
+                <h3 class="font-bold text-lg mb-2 border-t pt-4">Produtos Disponíveis:</h3>
+                <div>
+                    ${productsHtml}
+                </div>
+            `;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event.target.id === 'product-modal' || event.target.closest('button')) {
+                document.getElementById('product-modal').classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
